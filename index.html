@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to my website</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .light-mode {
+            background-color: white;
+            color: black;
+        }
+        .dark-mode {
+            background-color: black;
+            color: white;
+        }
+        .ip-address {
+            color: red;
+            font-size: 2em;
+        }
+        .switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <div class="switch">
+        <label>
+            <input type="checkbox" id="modeSwitch">
+            Dark Mode
+        </label>
+    </div>
+    <div class="ip-address" id="ipAddress">Loading...</div>
+
+    <script>
+        document.getElementById('modeSwitch').addEventListener('change', function() {
+            document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
+        });
+
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ipAddress').textContent = data.ip;
+            })
+            .catch(error => {
+                document.getElementById('ipAddress').textContent = 'Unable to fetch IP address';
+                console.error('Error fetching IP address:', error);
+            });
+    </script>
+</body>
+</html>
